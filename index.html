@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LinkedIn Style Home</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      padding-top: 70px;
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: white;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+    }
+
+    .navbar .left, .navbar .right {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: #0073b1;
+      font-weight: 500;
+      margin: 0 10px;
+      transition: color 0.3s ease;
+    }
+
+    .navbar a:hover {
+      color: #004b7c;
+    }
+
+    .navbar .logo {
+      font-size: 20px;
+      font-weight: bold;
+      color: #0073b1;
+      margin-right: 15px;
+    }
+
+    /* Carousel */
+    .carousel-container {
+      position: relative;
+      max-width: 1000px;
+      margin: 20px auto;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .carousel-slide {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .carousel-image {
+      min-width: 100%;
+      height: 400px;
+      object-fit: cover;
+    }
+
+    .carousel-buttons {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+
+    .carousel-buttons button {
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      font-size: 18px;
+      border-radius: 50%;
+    }
+
+    /* Content */
+    .content {
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .content h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .content p {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+      }
+
+      .navbar .left, .navbar .right {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+      }
+
+      .navbar a {
+        margin: 5px 0;
+      }
+
+      .carousel-image {
+        height: 250px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .navbar {
+        padding: 8px;
+      }
+
+      .navbar .logo {
+        font-size: 18px;
+      }
+
+      .navbar a {
+        font-size: 14px;
+      }
+
+      .carousel-image {
+        height: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="left">
+      <div class="logo">Job Seeker</div>
+     
+    </div>
+    <div class="right">
+      
+      <a href="ulogin.html">User</a>
+      <a href="clogin.html">Company</a>
+    </div>
+  </div>
+
+  <!-- Carousel -->
+  <div class="carousel-container">
+    <div class="carousel-slide" id="carouselSlide">
+      <img class="carousel-image" src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=1000" alt="Team at work">
+      <img class="carousel-image" src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=1000" alt="Office meeting">
+      <img class="carousel-image" src="https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=1000" alt="Job interview">
+    </div>
+    <div class="carousel-buttons">
+      <button id="prev">&#10094;</button>
+      <button id="next">&#10095;</button>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+    <h1>Welcome to Job Portal !</h1>
+    <p>Welcome to Job Seeker page — the world’s largest professional network. We're here to help you showcase your skills, grow your career, and connect with opportunities that matter.
+
+
+
+
+
+
+
+
+      . Add jobs, login portals, and user dashboards to complete the experience.</p>
+  </div>
+
+  <script>
+    const slide = document.getElementById("carouselSlide");
+    const images = slide.querySelectorAll(".carousel-image");
+    const prev = document.getElementById("prev");
+    const next = document.getElementById("next");
+    let counter = 0;
+
+    function updateCarousel() {
+      slide.style.transform = `translateX(-${counter * 100}%)`;
+    }
+
+    next.addEventListener("click", () => {
+      counter = (counter + 1) % images.length;
+      updateCarousel();
+    });
+
+    prev.addEventListener("click", () => {
+      counter = (counter - 1 + images.length) % images.length;
+      updateCarousel();
+    });
+
+    // Auto Slide
+    setInterval(() => {
+      counter = (counter + 1) % images.length;
+      updateCarousel();
+    }, 5000);
+  </script>
+
+</body>
+</html>
+

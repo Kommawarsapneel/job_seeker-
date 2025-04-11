@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LinkedIn Style Jobs</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4;
+    }
+
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 5%;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      flex-wrap: wrap;
+    }
+
+    .header-bar h1 {
+      color: #0a66c2;
+      margin: 0;
+      font-size: 1.8em;
+    }
+
+    .search-input {
+      padding: 10px;
+      width: 60%;
+      max-width: 400px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+
+    #postContainer {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 30px 5%;
+    }
+
+    .card {
+      width: 100vw;
+      margin-left: calc(-5vw);
+      padding: 20px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 0;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      transition: box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card:hover {
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    }
+
+    .job-title {
+      color: #0a66c2;
+      font-size: 1.4em;
+      margin-bottom: 5px;
+    }
+
+    .company {
+      font-weight: 600;
+      color: #222;
+      margin-bottom: 5px;
+    }
+
+    .location {
+      color: #666;
+      font-size: 0.95em;
+      margin-bottom: 5px;
+    }
+
+    .posting-date {
+      font-size: 0.85em;
+      color: #888;
+      margin-bottom: 15px;
+    }
+
+    .apply-btn {
+      align-self: flex-start;
+      background-color: #0a66c2;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 0.95em;
+    }
+
+    .apply-btn:hover {
+      background-color: #004182;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header with h1 and search input side by side -->
+  <div class="header-bar">
+    <h1>Explore Jobs</h1>
+    <input 
+      type="text" 
+      id="searchInput" 
+      class="search-input" 
+      placeholder="Search job position..." 
+      oninput="filterJobs()"
+    >
+  </div>
+
+  <div id="postContainer"></div>
+
+  <script>
+    let allJobs = [];
+
+    function applyJob(role) {
+      const userEmail = localStorage.getItem("registeredEmail") || "Not Logged In";
+      alert(`You have successfully applied for the "${role}" job to ${userEmail}`);
+    }
+
+    function renderJobs(jobs) {
+      const container = document.getElementById('postContainer');
+      container.innerHTML = ''; // Clear previous cards
+
+      jobs.forEach(post => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        card.innerHTML = `
+          <div class="job-title">${post.job_position}</div>
+          <div class="company">${post.company_name || 'Unknown Company'}</div>
+          <div class="location">${post.job_location || 'Location not specified'}</div>
+          <div class="posting-date">Posted on: ${post.job_posting_date || 'N/A'}</div>
+          <button class="apply-btn" onclick="applyJob('${post.job_position}')">Apply</button>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function filterJobs() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = allJobs.filter(job => job.job_position.toLowerCase().includes(query));
+      renderJobs(filtered);
+    }
+
+    fetch('http://localhost:3000/posts')
+      .then(response => response.json())
+      .then(data => {
+        allJobs = data;
+        renderJobs(allJobs);
+      })
+      .catch(error => {
+        console.error('Error fetching posts:', error);
+      });
+  </script>
+</body>
+</html>

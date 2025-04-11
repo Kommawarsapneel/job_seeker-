@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Job Seeker Profile</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 600px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #007b5e;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #005a43;
+    }
+
+    .next-btn {
+      margin-top: 10px;
+      background-color: #6c63ff;
+    }
+
+    .next-btn:hover {
+      background-color: #5148d3;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      input, textarea, select {
+        font-size: 13px;
+      }
+      button {
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Job Seeker Profile</h2>
+    <div class="form-group">
+      <label for="email">Email (from login)</label>
+      <input type="email" id="email" readonly />
+    </div>
+    <div class="form-group">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" placeholder="John Doe" />
+    </div>
+    <div class="form-group">
+      <label for="headline">Headline</label>
+      <input type="text" id="headline" placeholder="Software Developer | JavaScript | React" />
+    </div>
+    <div class="form-group">
+      <label for="location">Location</label>
+      <input type="text" id="location" placeholder="Hyderabad, India" />
+    </div>
+    <div class="form-group">
+      <label for="experience">Experience</label>
+      <input type="text" id="experience" placeholder="2 years at XYZ Corp" />
+    </div>
+    <div class="form-group">
+      <label for="education">Education</label>
+      <input type="text" id="education" placeholder="B.Tech in Computer Science" />
+    </div>
+    <div class="form-group">
+      <label for="skills">Skills</label>
+      <input type="text" id="skills" placeholder="HTML, CSS, JavaScript, React, Python" />
+    </div>
+    <div class="form-group">
+      <label for="about">About You</label>
+      <textarea id="about" rows="4" placeholder="Brief introduction about yourself..."></textarea>
+    </div>
+    <button onclick="submitProfile()">Save Profile</button>
+    <button class="next-btn" onclick="goToDashboard()">Next</button>
+  </div>
+
+  <script>
+    // Auto-fill email from login
+    const storedEmail = localStorage.getItem("registeredEmail");
+    document.getElementById("email").value = storedEmail || "";
+
+    function submitProfile() {
+      const profile = {
+        email: document.getElementById("email").value,
+        name: document.getElementById("name").value,
+        headline: document.getElementById("headline").value,
+        location: document.getElementById("location").value,
+        experience: document.getElementById("experience").value,
+        education: document.getElementById("education").value,
+        skills: document.getElementById("skills").value,
+        about: document.getElementById("about").value
+      };
+
+      console.log("Profile Saved:", profile);
+      alert("Profile saved successfully!");
+      // You can store in Firebase or localStorage here
+    }
+
+    function goToDashboard() {
+      window.location.href = "urdashboard.html";
+    }
+  </script>
+</body>
+</html>

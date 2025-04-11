@@ -1,0 +1,24 @@
+{
+  "jobdetails": [
+    {
+      "job_id": 1,
+      "job_position": "Junior Software Developer",
+      "job_link": "https://example.com/job1",
+      "company_name": "TechNova",
+      "company_profile": "https://example.com/company1",
+      "job_location": "Hyderabad",
+      "job_posting_date": "2025-04-06",
+      "company_logo_url": "https://via.placeholder.com/100"
+    },
+    {
+      "job_id": 2,
+      "job_position": "Frontend Developer - Remote",
+      "job_link": "https://example.com/job2",
+      "company_name": "CodeWave",
+      "company_profile": "https://example.com/company2",
+      "job_location": "Remote",
+      "job_posting_date": "2025-04-05",
+      "company_logo_url": "https://via.placeholder.com/100"
+    }
+  ]
+}

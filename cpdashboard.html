@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Company Dashboard</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f6f8;
+    }
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    h1, h2 {
+      text-align: center;
+      color: #333;
+    }
+    form {
+      display: grid;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    input, button {
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .card {
+      border-left: 5px solid #007bff;
+      padding: 15px;
+      margin: 10px;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+      width: 250px;
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: scale(1.02);
+    }
+    .job-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Company Dashboard</h1>
+    <form id="jobForm">
+      <input type="number" id="job_id" placeholder="Job ID (for update/delete)" />
+      <input type="text" id="job_position" placeholder="Job Position" required />
+      <input type="text" id="job_location" placeholder="Location" required />
+      <input type="date" id="job_posting_date" required />
+      <input type="text" id="company_name" placeholder="Company Name" required />
+
+      <button type="button" id="getBtn">GET DETAILS</button>
+      <button type="button" id="postBtn">POST DETAILS</button> 
+      <button type="button" id="putBtn">PUT DETAILS</button>
+      <button type="button" id="deleteBtn">DELETE DETAILS</button>
+    </form>
+
+    <h2>Posted Jobs</h2>
+    <div id="jobList" class="job-list"></div>
+  </div>
+
+  <script>
+    const API_URL = "http://localhost:3000/posts";
+
+    document.getElementById("getBtn").addEventListener("click", getdetails);
+    document.getElementById("postBtn").addEventListener("click", Postdata);
+    document.getElementById("putBtn").addEventListener("click", putdata);
+    document.getElementById("deleteBtn").addEventListener("click", deletedata);
+
+    function clearForm() {
+      document.getElementById("jobForm").reset();
+    }
+
+    function isFormValid() {
+      return (
+        document.getElementById("job_position").value &&
+        document.getElementById("job_location").value &&
+        document.getElementById("job_posting_date").value &&
+        document.getElementById("company_name").value
+      );
+    }
+
+    async function getdetails() {
+      try {
+        let res = await fetch(API_URL);
+        if (!res.ok) throw new Error("Failed to fetch data");
+        let data = await res.json();
+        displayData(data);
+      } catch (err) {
+        alert("Error fetching data: " + err.message);
+      }
+    }
+
+    async function Postdata() {
+      if (!isFormValid()) return alert("Please fill all fields.");
+
+      let job = {
+        job_position: document.getElementById("job_position").value,
+        job_location: document.getElementById("job_location").value,
+        job_posting_date: document.getElementById("job_posting_date").value,
+        company_name: document.getElementById("company_name").value
+      };
+
+      await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(job)
+      });
+
+      clearForm();
+      getdetails();
+    }
+
+    async function putdata() {
+      let id = document.getElementById("job_id").value;
+      if (!id) return alert("Enter Job ID for update");
+      if (!isFormValid()) return alert("Please fill all fields.");
+
+      let job = {
+        job_position: document.getElementById("job_position").value,
+        job_location: document.getElementById("job_location").value,
+        job_posting_date: document.getElementById("job_posting_date").value,
+        company_name: document.getElementById("company_name").value
+      };
+
+      await fetch(`${API_URL}/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(job)
+      });
+
+      clearForm();
+      getdetails();
+    }
+
+    async function deletedata() {
+      let id = document.getElementById("job_id").value;
+      if (!id) return alert("Enter Job ID to delete");
+
+      if (confirm("Are you sure you want to delete this job?")) {
+        await fetch(`${API_URL}/${id}`, {
+          method: "DELETE"
+        });
+        clearForm();
+        getdetails();
+      }
+    }
+
+    function displayData(data) {
+      const jobList = document.getElementById("jobList");
+      jobList.innerHTML = "";
+
+      if (!Array.isArray(data) || data.length === 0) {
+        jobList.innerHTML = "<p>No job postings found.</p>";
+        return;
+      }
+
+      data.forEach(item => {
+        let card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <strong>ID:</strong> ${item.id} <br> 
+          <strong>Position:</strong> ${item.job_position} <br>
+          <strong>Location:</strong> ${item.job_location} <br>
+          <strong>Date:</strong> ${item.job_posting_date} <br>
+          <strong>Company:</strong> ${item.company_name}
+        `;
+        jobList.appendChild(card);
+      });
+    }
+
+    // Auto load on page start
+    getdetails();
+  </script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Company Registration</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 600px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    button {
+      flex: 1;
+      padding: 12px;
+      background-color: #007b5e;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #005a43;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 20px;
+      }
+      input, textarea, select {
+        font-size: 13px;
+      }
+      button {
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Company Registration</h2>
+
+  <div class="form-group">
+    <label for="companyName">Company Name</label>
+    <input type="text" id="companyName" placeholder="ABC Pvt Ltd" />
+  </div>
+  <div class="form-group">
+    <label for="email">Email (from login)</label>
+    <input type="email" id="email" readonly />
+  </div>
+  <div class="form-group">
+    <label for="industry">Industry</label>
+    <input type="text" id="industry" placeholder="Information Technology" />
+  </div>
+
+  <div class="form-group">
+    <label for="size">Company Size</label>
+    <input type="text" id="size" placeholder="51-200 employees" />
+  </div>
+
+  <div class="form-group">
+    <label for="website">Website</label>
+    <input type="url" id="website" placeholder="https://www.company.com" />
+  </div>
+
+  <div class="form-group">
+    <label for="location">Location</label>
+    <input type="text" id="location" placeholder="Hyderabad, India" />
+  </div>
+
+  <div class="form-group">
+    <label for="about">About Company</label>
+    <textarea id="about" rows="4" placeholder="Write about your company..."></textarea>
+  </div>
+
+  <div class="btn-container">
+    <button onclick="saveCompanyProfile()">Save</button>
+    <button onclick="goToDashboard()">Next</button>
+  </div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+  
+    const firebaseConfig = {
+      apiKey: "AIzaSyBiLHmWTYElcv2uKsJAPSsw7nlWIyiBZRI",
+      authDomain: "task1-f1d3b.firebaseapp.com",
+      projectId: "task1-f1d3b",
+      storageBucket: "task1-f1d3b.appspot.com",
+      messagingSenderId: "792340878276",
+      appId: "1:792340878276:web:7c87f873f3f875fa070a91"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    
+  
+    window.saveCompanyProfile = async function () {
+     
+      const name = document.getElementById("companyName").value.trim();
+      const email= document.getElementById("email").value.trim();
+      const industry = document.getElementById("industry").value.trim();
+      const size = document.getElementById("size").value.trim();
+      const website = document.getElementById("website").value.trim();
+      const location = document.getElementById("location").value.trim();
+      const about = document.getElementById("about").value.trim();
+  
+      if (!name ||!email || !industry || !size || !website || !location || !about) {
+        alert("Please fill in all fields before saving.");
+        return;
+      }
+  
+      const company = {
+        name,
+        email,
+        industry,
+        size,
+        website,
+        location,
+        about,
+        timestamp: new Date()
+      };
+  
+      try {
+        // Save the data in a document with a unique ID (can use company name or auto ID)
+        const user = auth.currentUser;
+        const uid = user ? user.uid : Date.now().toString(); // fallback if user not logged in
+  
+        await setDoc(doc(db, "companies", uid), company);
+  
+        alert("Company profile saved to Firebase!");
+        localStorage.setItem("companyProfile", JSON.stringify(company)); // optional
+      } catch (error) {
+        console.error("Error saving company profile:", error);
+        alert("Error saving company profile: " + error.message);
+      }
+    };
+  
+    window.goToDashboard = function () {
+      const email = document.getElementById("email").value.trim();
+      const name = document.getElementById("companyName").value.trim();
+      const industry = document.getElementById("industry").value.trim();
+      const size = document.getElementById("size").value.trim();
+      const website = document.getElementById("website").value.trim();
+      const location = document.getElementById("location").value.trim();
+      const about = document.getElementById("about").value.trim();
+  
+      if (!name || !industry || !size || !website || !location || !about) {
+        alert("Please complete and save your profile before continuing.");
+        return;
+      }
+  
+      window.location.href = "companydashboard.html";
+    };
+    // const storedEmail = localStorage.getItem("registeredEmail");
+    // document.getElementById("email").value = storedEmail || "";
+    auth.onAuthStateChanged((user) => {
+  if (user) {
+    document.getElementById("email").value = user.email;
+    prefillCompanyProfile(user.uid);
+  } else {
+    alert("User not logged in. Redirecting to login...");
+    window.location.href = "cpregitration.html";
+  }
+});
+
+import { getDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+async function prefillCompanyProfile(uid) {
+  try {
+    const docRef = doc(db, "companies", uid);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      document.getElementById("companyName").value = data.name || "";
+      document.getElementById("industry").value = data.industry || "";
+      document.getElementById("size").value = data.size || "";
+      document.getElementById("website").value = data.website || "";
+      document.getElementById("location").value = data.location || "";
+      document.getElementById("about").value = data.about || "";
+
+      alert("Profile loaded. You can edit and save again if needed.");
+    }
+  } catch (error) {
+    console.error("Error loading profile:", error);
+    alert("Could not load your company profile.");
+  }
+}
+
+  </script>
+  
+
+  
+
+</body>
+</html>

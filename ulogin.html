@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f2f2f2;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 24px;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    #btn2 {
+      width: 100%;
+      background-color: green;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    #btn2:hover {
+      background-color: darkgreen;
+    }
+
+    @media screen and (max-width: 480px) {
+      .container {
+        padding: 20px;
+        border-radius: 10px;
+      }
+
+      input, #btn2 {
+        font-size: 15px;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Login</h2>
+    <input type="email" id="loginEmail" placeholder="Email" />
+    <input type="password" id="loginPassword" placeholder="Password" />
+    <button id="btn2">Login</button>
+
+    <p style="text-align: center; margin-top: 15px;">
+      Don't have an account? 
+      <a href="regitration.html" style="color: #0073b1; text-decoration: none; font-weight: 500;">
+        REGISTER HERE
+      </a>
+    </p>
+    <p style="text-align: center; margin-top: 10px;">
+      Or continue as a 
+      <a href="#" id="guestLink" style="color: #ff6600; text-decoration: none; font-weight: 500;">
+        GUEST
+      </a>
+    </p>
+  </div>
+
+  
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBiLHmWTYElcv2uKsJAPSsw7nlWIyiBZRI",
+      authDomain: "task1-f1d3b.firebaseapp.com",
+      projectId: "task1-f1d3b",
+      storageBucket: "task1-f1d3b.appspot.com",
+      messagingSenderId: "792340878276",
+      appId: "1:792340878276:web:7c87f873f3f875fa070a91"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    
+    document.getElementById("btn2").addEventListener("click", () => {
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value;
+
+  if (!email || !password) {
+    alert("Please fill in both email and password.");
+    return;
+  }
+
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      alert("✅ Login successful!");
+      console.log("Logged in user:", user);
+      window.location.href = "urdashboard.html"; // or your desired page
+    })
+    .catch((error) => {
+      console.error("Login error:", error);
+      alert("❌ Login failed: " + error.message);
+    });
+});
+
+document.getElementById("guestLink").addEventListener("click", (e) => {
+  e.preventDefault(); // prevent default anchor behavior
+  alert("Continuing as Guest...");
+  window.location.href = "urdashboard.html";
+});
+  </script>
+</body>
+</html>
