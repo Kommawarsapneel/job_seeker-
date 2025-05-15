@@ -112,6 +112,85 @@
       font-size: 16px;
       line-height: 1.6;
     }
+.marquee-container {
+  overflow: hidden;
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+  padding: 20px 0;
+  margin-top: 40px;
+}
+
+.marquee-track {
+  display: flex;
+  animation: scroll-left 60s linear infinite; /* slower motion */
+  gap: 20px;
+  min-width: 200%;
+}
+
+.person-card {
+  flex: 0 0 auto;
+  background: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 10px;
+  width: 180px;
+  text-align: center;
+  transition: transform 0.5s ease;
+}
+
+.person-card:hover {
+  transform: scale(2.05);
+}
+
+.person-card img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  object-fit: cover;
+}
+
+.person-card h4 {
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+.person-card p {
+  font-size: 14px;
+  margin: 2px 0;
+}
+
+.person-card small {
+  font-size: 12px;
+  color: #555;
+}
+
+/* Marquee animation */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .person-card {
+    width: 140px;
+    padding: 8px;
+  }
+
+  .person-card h4 {
+    font-size: 14px;
+  }
+
+  .person-card p,
+  .person-card small {
+    font-size: 12px;
+  }
+}
 
     /* Responsive */
     @media (max-width: 768px) {
@@ -197,6 +276,172 @@
 
       . Add jobs, login portals, and user dashboards to complete the experience.</p>
   </div>
+  <div class="marquee-container">
+  <div class="marquee-track">
+    <div class="marquee-track">
+  <div class="person-card">
+    <img src="https://randomuser.me/api/portraits/men/21.jpg" alt="User">
+    <h4>Rajesh Kumar</h4>
+    <p>TCS</p>
+    <small>Software Engineer</small>
+  </div>
+  <div class="person-card">
+    <img src="https://randomuser.me/api/portraits/women/31.jpg" alt="User">
+    <h4>Neha Sharma</h4>
+    <p>Infosys</p>
+    <small>Data Scientist</small>
+  </div>
+  <div class="person-card">
+    <img src="https://randomuser.me/api/portraits/men/55.jpg" alt="User">
+    <h4>Amit Verma</h4>
+    <p>Wipro</p>
+    <small>Full Stack Developer</small>
+  </div>
+  <div class="person-card">
+    <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="User">
+    <h4>Kavya Iyer</h4>
+    <p>HCL</p>
+    <small>UI/UX Designer</small>
+  </div>
+  <div class="person-card">
+    <img src="https://randomuser.me/api/portraits/men/76.jpg" alt="User">
+    <h4>Vikram Rao</h4>
+    <p>Zoho Corp</p>
+    <small>DevOps Engineer</small>
+  </div>
+  <div class="person-card">
+    <img src="https://randomuser.me/api/portraits/women/66.jpg" alt="User">
+    <h4>Anjali Deshmukh</h4>
+    <p>Capgemini</p>
+    <small>Business Analyst</small>
+  </div>
+  <div class="person-card">
+    <img src="https://randomuser.me/api/portraits/men/13.jpg" alt="User">
+    <h4>Arun Pillai</h4>
+    <p>Tech Mahindra</p>
+    <small>Cloud Architect</small>
+  </div>
+  <div class="person-card">
+    <img src="https://randomuser.me/api/portraits/women/58.jpg" alt="User">
+    <h4>Sneha Reddy</h4>
+    <p>Amazon India</p>
+    <small>Frontend Developer</small>
+  </div>
+  <div class="person-card">
+    <img src="https://randomuser.me/api/portraits/men/42.jpg" alt="User">
+    <h4>Sachin Mehta</h4>
+    <p>Flipkart</p>
+    <small>Android Developer</small>
+  </div>
+  <div class="person-card">
+    <img src="https://randomuser.me/api/portraits/women/84.jpg" alt="User">
+    <h4>Pooja Jain</h4>
+    <p>Paytm</p>
+    <small>Software Tester</small>
+  </div>
+  <div class="person-card">
+    <img src="https://randomuser.me/api/portraits/men/36.jpg" alt="User">
+    <h4>Manoj Nair</h4>
+    <p>BYJU’S</p>
+    <small>Python Developer</small>
+  </div>
+  <div class="person-card">
+    <img src="https://randomuser.me/api/portraits/women/25.jpg" alt="User">
+    <h4>Ritika Bansal</h4>
+    <p>Freshworks</p>
+    <small>QA Engineer</small>
+  </div>
+  <div class="person-card">
+    <img src="https://randomuser.me/api/portraits/men/88.jpg" alt="User">
+    <h4>Abhishek Das</h4>
+    <p>Mindtree</p>
+    <small>React Developer</small>
+  </div>
+  <div class="person-card">
+    <img src="https://randomuser.me/api/portraits/women/37.jpg" alt="User">
+    <h4>Shraddha Kulkarni</h4>
+    <p>Accenture</p>
+    <small>Project Coordinator</small>
+  </div>
+  <div class="person-card">
+    <img src="https://randomuser.me/api/portraits/men/29.jpg" alt="User">
+    <h4>Kunal Joshi</h4>
+    <p>Oracle India</p>
+    <small>Database Engineer</small>
+  </div>
+  <div class="person-card">
+    <img src="https://randomuser.me/api/portraits/women/73.jpg" alt="User">
+    <h4>Divya Menon</h4>
+    <p>Cognizant</p>
+    <small>Web Developer</small>
+  </div>
+</div>
+
+    <!-- Card 1 -->
+    <div class="person-card">
+      <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User">
+      <h4>John Doe</h4>
+      <p>ABC Corp</p>
+      <small>Frontend Developer</small>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="person-card">
+      <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User">
+      <h4>Jane Smith</h4>
+      <p>XYZ Ltd</p>
+      <small>UI/UX Designer</small>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="person-card">
+      <img src="https://randomuser.me/api/portraits/men/66.jpg" alt="User">
+      <h4>Arjun Patel</h4>
+      <p>InnoTech</p>
+      <small>Data Analyst</small>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="person-card">
+      <img src="https://randomuser.me/api/portraits/women/52.jpg" alt="User">
+      <h4>Meera Khanna</h4>
+      <p>TechNova</p>
+      <small>Product Manager</small>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="person-card">
+      <img src="https://randomuser.me/api/portraits/men/11.jpg" alt="User">
+      <h4>David Rao</h4>
+      <p>CloudSync</p>
+      <small>DevOps Engineer</small>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="person-card">
+      <img src="https://randomuser.me/api/portraits/women/22.jpg" alt="User">
+      <h4>Nina Verma</h4>
+      <p>BrightAI</p>
+      <small>Machine Learning Engineer</small>
+    </div>
+
+    <!-- Card 7 -->
+    <div class="person-card">
+      <img src="https://randomuser.me/api/portraits/men/23.jpg" alt="User">
+      <h4>Sachin Mehta</h4>
+      <p>CodeHut</p>
+      <small>Full Stack Developer</small>
+    </div>
+
+    <!-- Card 8 -->
+    <div class="person-card">
+      <img src="https://randomuser.me/api/portraits/women/36.jpg" alt="User">
+      <h4>Priya Iyer</h4>
+      <p>FinTech Pro</p>
+      <small>QA Analyst</small>
+    </div>
+  </div>
+</div>
 
   <script>
     const slide = document.getElementById("carouselSlide");

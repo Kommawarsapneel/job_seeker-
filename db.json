@@ -1,0 +1,47 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    },
+    {
+      "job_position": "web devloper",
+      "job_location": "hyderbad",
+      "job_posting_date": "2025-05-12",
+      "company_name": "wipro",
+      "id": 2
+    },
+    {
+      "job_position": "Associate software",
+      "job_location": "Bangalore",
+      "job_posting_date": "2025-05-11",
+      "company_name": "CGI",
+      "id": 3
+    },
+    {
+      "job_position": "junior Fronted Developer",
+      "job_location": "Hyderabad",
+      "job_posting_date": "2025-05-14",
+      "company_name": "Cognizant",
+      "id": 4
+    },
+    {
+      "job_position": "Software Developer",
+      "job_location": "Bengaluru",
+      "job_posting_date": "2025-05-09",
+      "company_name": "Amazon",
+      "id": 5
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
